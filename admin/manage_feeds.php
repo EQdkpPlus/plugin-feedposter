@@ -105,6 +105,63 @@ class FeedPosterFeeds extends page_generic {
 		}
 		$this->display($message);
 	}
+	
+	public function update(){
+		
+	}
+	
+	public function edit(){
+		$intFeedID = $this->in->get('edit', 0);
+		
+		$arrCategoryIDs = $this->pdh->sort($this->pdh->get('article_categories', 'id_list', array()), 'article_categories', 'sort_id', 'asc');
+		$arrCategories = array();
+		foreach($arrCategoryIDs as $caid){
+			$arrCategories[$caid] = $this->pdh->get('article_categories', 'name_prefix', array($caid)).$this->pdh->get('article_categories', 'name', array($caid));
+		}
+		
+		
+		if($intFeedID){
+			$arrFeedData = $this->pdh->get('feedposter_feeds', 'data', array($intFeedID));
+			$strFeedName = $arrFeedData['name'];
+			
+			$this->tpl->assign_vars(array(
+				'FEED_NAME'				=> $arrFeedData['name'],
+				'FEED_URL'				=> $arrFeedData['url'],
+				'FEED_CATEGORY'			=> new hdropdown('category', array('options' => $arrCategories, 'value' => $arrFeedData['categoryID'])),
+				'FEED_USER'				=> new hdropdown('user_id', array('options' => $this->pdh->aget('user', 'name', 0, array($this->pdh->get('user', 'id_list'))), 'value' => $arrFeedData['userID'])),
+				'FEED_TAGS'				=> implode(', ', $this->pdh->get('feedposter_feeds', 'tags', array($intFeedID))),
+				'FEED_INTERVAL'			=> new hdropdown('interval', array('options' => $this->user->lang('fp_repeat_inveral'), 'value' => $arrFeedData['interval'])),
+				'FEED_ALLOW_COMMENTS'	=> new hradio('allow_comments', array('value' => $arrFeedData['allowComments'])),
+				'FEED_MAXPOSTS'			=> new hspinner('maxposts', array('min' => 0, 'value' => $arrFeedData['maxPosts'])),
+				'FEED_MAXLENGTH'		=> new hspinner('maxlength', array('min' => 0, 'value' => $arrFeedData['maxTextLength'])),
+			));
+		} else {
+			$this->tpl->assign_vars(array(
+				'FEED_NAME'				=> "",
+				'FEED_CATEGORY'			=> new hdropdown('category', array('options' => $arrCategories, 'value' => 2)),
+				'FEED_USER'				=> new hdropdown('user_id', array('options' => $this->pdh->aget('user', 'name', 0, array($this->pdh->get('user', 'id_list'))), 'value' => $this->user->id)),
+				'FEED_TAGS'				=> implode(', ', $this->pdh->get('feedposter_feeds', 'tags', array($intFeedID))),
+				'FEED_INTERVAL'			=> new hdropdown('interval', array('options' => $this->user->lang('fp_repeat_inveral'), 'value' => 3600)),
+				'FEED_ALLOW_COMMENTS'	=> new hradio('allow_comments', array('value' => 1)),
+				'FEED_MAXPOSTS'			=> new hspinner('maxposts', array('min' => 0, 'value' => 0)),
+				'FEED_MAXLENGTH'		=> new hspinner('maxlength', array('min' => 0, 'value' => 0)),
+			));
+		}
+		
+		
+		$this->tpl->assign_vars(array(
+			'FEEDNAME'	=> (($intFeedID) ? $strFeedName : $this->user->lang('fp_new_feed')),
+			'FEED_ID'	=> $intFeedID,
+		));
+		
+		// -- EQDKP ---------------------------------------------------------------
+		$this->core->set_vars(array(
+				'page_title'		=> (($intFeedID) ? $strFeedName : $this->user->lang('fp_new_feed')).' - '.$this->user->lang('fp_manage_feeds'),
+				'template_path'		=> $this->pm->get_data('feedposter', 'template_path'),
+				'template_file'		=> 'admin/manage_feeds_edit.html',
+				'display'			=> true
+		));
+	}
 
 	/**
 	* display

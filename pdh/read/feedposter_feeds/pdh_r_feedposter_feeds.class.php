@@ -176,7 +176,7 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 		 */
 		 public function get_tags($intFeedID){
 			if (isset($this->feedposter_feeds[$intFeedID])){
-				return $this->feedposter_feeds[$intFeedID]['tags'];
+				return strlen($this->feedposter_feeds[$intFeedID]['tags']) ? unserialize($this->feedposter_feeds[$intFeedID]['tags']) : '';
 			}
 			return false;
 		}

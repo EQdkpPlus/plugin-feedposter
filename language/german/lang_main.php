@@ -43,6 +43,23 @@ $lang = array(
 	'fp_disable_nosuc'			=> 'Beim Deaktivieren des Feeds %s ist ein Fehler aufgetreten',
 	'fp_delete_suc'				=> 'Die ausgewählten Feeds wurden erfolgreich gelöscht',
 	'fp_delete_nosuc'			=> 'Beim Löschen der ausgewählten Feeds ist ein Fehler aufgetreten',
+	'fp_repeat_inveral'			=> array(
+		'600' => 'alle 10 Minuten',
+		'1200' => 'alle 20 Minuten',
+		'1800' =>  'alle 30 Minuten',
+		'3600' => 'alle 60 Minuten',
+		'7200' => 'alle 2 Stunden',
+		'21600' => 'alle 6 Stunden',
+		'86400' => 'alle 24 Stunden',
+	),
+	'fp_article_data' 			=> 'Artikel-Daten',
+	'fp_interval'				=> 'Abruf-Frequenz',
+	'fp_maxposts'				=> 'Anzahl der importierten Einträge',
+	'fp_maxlength'				=> 'Maximale Länge der importierten Einträge',
+	'fp_maxposts_help'			=> 'Trage 0 ein, um alle neuen Einträge zu importieren',
+	'fp_maxlength_help'			=> 'Trage 0 ein, um den kompletten Text des Einträges zu importieren.',
+	'fp_entries'				=> 'Einträge',
+	'fp_chars'					=> 'Zeichen',
 );
 
 ?>
