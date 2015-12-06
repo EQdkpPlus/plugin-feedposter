@@ -1,0 +1,48 @@
+<?php
+/*	Project:	EQdkp-Plus
+ *	Package:	feedposter Plugin
+ *	Link:		http://eqdkp-plus.eu
+ *
+ *	Copyright (C) 2006-2015 EQdkp-Plus Developer Team
+ *
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU Affero General Public License as published
+ *	by the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU Affero General Public License for more details.
+ *
+ *	You should have received a copy of the GNU Affero General Public License
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+if (!defined('EQDKP_INC')){
+	header('HTTP/1.0 404 Not Found');exit;
+}
+
+$lang = array(
+	'feedposter'					=> 'FeedPoster',
+
+	// Description
+	'feedposter_short_desc'		=> 'FeedPoster',
+	'feedposter_long_desc'		=> 'FeedPoster postet automatisch Artikel von RSS oder Atom-Feeds.',
+
+	'fp_manage_feeds'			=> 'Feeds verwalten',
+	'fp_plugin_not_installed'	=> 'Das FeedPoster-Plugin ist nicht installiert.',
+	'fp_new_feed'				=> 'Feed hinzufügen',
+	'fp_confirm_delete_feed'	=> 'Bist du sicher, dass die Feeds %s gelöscht werden sollen?',
+	'fp_url'					=> 'Feed-URL',
+	'fp_last_updated'			=> 'Feed zuletzt abgerufen',
+	'fp_last_status'			=> 'Letzter Abrufstatus',
+	'fp_enable_suc'				=> 'Der Feed %s wurde erfolgreich aktiviert',
+	'fp_enable_nosuc'			=> 'Beim Aktivieren des Feeds %s ist ein Fehler aufgetreten',
+	'fp_disable_suc'			=> 'Der Feed %s wurde erfolgreich deaktiviert',
+	'fp_disable_nosuc'			=> 'Beim Deaktivieren des Feeds %s ist ein Fehler aufgetreten',
+	'fp_delete_suc'				=> 'Die ausgewählten Feeds wurden erfolgreich gelöscht',
+	'fp_delete_nosuc'			=> 'Beim Löschen der ausgewählten Feeds ist ein Fehler aufgetreten',
+);
+
+?>
