@@ -93,6 +93,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 							if($val['time'] > $intLastUpdate && !in_array($val['hash'], $arrHashList)){
 								$strTitle = $val['title'];
 								$strText = $val['description'];
+								$strText = nl2br($strText);
 								
 								if($arrData['maxTextLength']){
 									if(strlen($strText) > $arrData['maxTextLength']){
@@ -155,8 +156,9 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				$strAlternateLink = "";
 				$childNodes = $xpath->query('child::*', $item);
 				$itemData = array();
-				foreach ($childNodes as $childNode) {					
-					if($childNode->nodeName == 'link'){
+				foreach ($childNodes as $childNode) {	
+					//  && $childNode->getAttribute('rel') == 'alternate'
+					if($childNode->nodeName == 'link'){						
 						$strAlternateLink = $childNode->getAttribute('href');
 					} else {
 						$itemData[$childNode->nodeName] = $childNode->nodeValue;
@@ -175,7 +177,9 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				} else {
 					$time = $this->time->time;
 				}
-				if (!empty($itemData['content'])) {
+				if (!empty($itemData['textContent'])) {
+					$description = $itemData['textContent'];
+				}elseif (!empty($itemData['content'])) {
 					$description = $itemData['content'];
 				} else {
 					$description = $itemData['summary'];
