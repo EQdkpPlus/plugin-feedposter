@@ -23,9 +23,10 @@ if (!defined('EQDKP_INC')){
 	header('HTTP/1.0 404 Not Found');exit;
 }
 
-$guildrequestSQL = array(
+$feedposterSQL = array(
 	'uninstall' => array(
 		1	=> 'DROP TABLE IF EXISTS `__plugin_feedposter_feeds`',
+		2	=> 'DROP TABLE IF EXISTS `__plugin_feedposter_log`',
 	),
 
 	'install'   => array(
@@ -46,6 +47,14 @@ $guildrequestSQL = array(
 				PRIMARY KEY (`id`)
 			)
 			DEFAULT CHARSET=utf8 COLLATE=utf8_bin;",
+		2 => "CREATE TABLE `__plugin_feedposter_log` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`feedID` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`hash` VARCHAR(255) NULL DEFAULT NULL,
+	`date` INT(11) UNSIGNED NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+)
+DEFAULT CHARSET=utf8 COLLATE=utf8_bin;"
 	)
 );
 ?>

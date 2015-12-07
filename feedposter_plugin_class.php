@@ -69,9 +69,24 @@ class feedposter extends plugin_generic {
 		// -- PDH Modules -------------------------------------
 		$this->add_pdh_read_module('feedposter_feeds');
 		$this->add_pdh_write_module('feedposter_feeds');
+		$this->add_pdh_read_module('feedposter_log');
+		$this->add_pdh_write_module('feedposter_log');
 		
 		// -- Menu --------------------------------------------
 		$this->add_menu('admin', $this->gen_admin_menu());
+		
+		$this->tpl->add_css('
+			.feedposter.feedtype_rss blockquote:before {
+				content: "\f09e";
+				color: #000;
+			}
+			
+			.feedposter.feedtype_rss blockquote{
+				border-color: #ffa133;
+				background-color: #ffc989;
+				color: #000;
+			}
+		');
 	}
 
 	/**
@@ -93,7 +108,7 @@ class feedposter extends plugin_generic {
 			'feedposter', array(
 				'extern'			=> true,
 				'ajax'				=> true,
-				'delay'				=> false,
+				'delay'				=> true,
 				'repeat'			=> true,
 				'repeat_type'		=> 'minutely',
 				'repeat_interval'	=> 10,
@@ -119,6 +134,8 @@ class feedposter extends plugin_generic {
 	
 		for ($i = 1; $i <= count($feedposterSQL['uninstall']); $i++)
 			$this->db->query($feedposterSQL['uninstall'][$i]);
+		
+		$this->pdc->del_prefix('feedposter');
 	}
 
 	/**

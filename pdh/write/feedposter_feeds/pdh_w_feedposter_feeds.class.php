@@ -52,18 +52,24 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			return false;
 		}
 		
-		public function add($intID, $strType, $strName, $strHelp, $arrOptions, $intSortID, $intRequired, $intInList = 0, $dep_field='', $dep_value=''){
+		public function add($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength){
+			$schluesselwoerter = preg_split("/[\s,]+/", $strTags);
+			$arrTags = array();
+			foreach($schluesselwoerter as $val){
+				$arrTags[] = utf8_strtolower(str_replace("-", "", $val));
+			}
+			
 			$objQuery = $this->db->prepare("INSERT INTO __plugin_feedposter_feeds :p")->set(array(
-				'id'		=> $intID,
-				'type'		=> $strType,
-				'name'		=> $strName,
-				'help'		=> $strHelp,
-				'options'	=> serialize($arrOptions),
-				'sortid' 	=> $intSortID,
-				'required' 	=> $intRequired,
-				'in_list'	=> $intInList,
-				'dep_field' => $dep_field,
-				'dep_value' => $dep_value,
+				'name' 			=> $strName,
+				'url' 			=> $strURL,
+				'categoryID'	=> $intCategory,
+				'userID'		=> $intUser,
+				'tags'			=> serialize($arrTags),
+				'`interval`'	=> $intInterval,
+				'enabled'		=> 1,
+				'allowComments'	=> ($blnAllowComments) ? 1 : 0,
+				'maxPosts'		=> $intMaxPosts,
+				'maxTextLength'	=> $intMaxLength,
 			))->execute();
 		
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
@@ -72,19 +78,25 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			return false;
 		}
 	
-		public function update($intID, $strType, $strName, $strHelp, $arrOptions, $intSortID, $intRequired, $intInList = 0, $dep_field='', $dep_value=''){
+		public function update($intID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength){
+			$schluesselwoerter = preg_split("/[\s,]+/", $strTags);
+			$arrTags = array();
+			foreach($schluesselwoerter as $val){
+				$arrTags[] = utf8_strtolower(str_replace("-", "", $val));
+			}
+			
 			$objQuery = $this->db->prepare("UPDATE __plugin_feedposter_feeds :p WHERE id=?")->set(array(
-				'type'		=> $strType,
-				'name'		=> $strName,
-				'help'		=> $strHelp,
-				'options'	=> serialize($arrOptions),
-				'sortid' 	=> $intSortID,
-				'required' 	=> $intRequired,
-				'in_list'	=> $intInList,
-				'dep_field' => $dep_field,
-				'dep_value' => $dep_value,
+				'name' 			=> $strName,
+				'url' 			=> $strURL,
+				'categoryID'	=> $intCategory,
+				'userID'		=> $intUser,
+				'tags'			=> serialize($arrTags),
+				'`interval`'	=> $intInterval,
+				'allowComments'	=> ($blnAllowComments) ? 1 : 0,
+				'maxPosts'		=> $intMaxPosts,
+				'maxTextLength'	=> $intMaxLength,
 			))->execute($intID);
-		
+			
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
 			if ($objQuery) return $intID;
 		
@@ -101,6 +113,28 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			$this->db->query("TRUNCATE __plugin_feedposter_feeds");
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
 			return true;
+		}
+		
+		public function set_error($intFeedID){
+			$objQuery = $this->db->prepare("UPDATE __plugin_feedposter_feeds :p WHERE id=?")->set(array(
+					'error' => 1
+			))->execute($intFeedID);
+				
+			$this->pdh->enqueue_hook('feedposter_feeds_update');
+			if ($objQuery) return true;
+				
+			return false;
+		}
+		
+		public function set_last_update($intFeedID, $intTime){
+			$objQuery = $this->db->prepare("UPDATE __plugin_feedposter_feeds :p WHERE id=?")->set(array(
+					'lastUpdated' => $intTime
+			))->execute($intFeedID);
+		
+			$this->pdh->enqueue_hook('feedposter_feeds_update');
+			if ($objQuery) return true;
+		
+			return false;
 		}
 
 	} //end class

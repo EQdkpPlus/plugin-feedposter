@@ -107,7 +107,30 @@ class FeedPosterFeeds extends page_generic {
 	}
 	
 	public function update(){
+		$intFeedID = $this->in->get('feed', 0);
+		$strName = $this->in->get('name');
+		$strURL = $this->in->get('url');
+		$intCategory = $this->in->get('category', 0);
+		$intUser = $this->in->get('user_id', 0);
+		$strTags = $this->in->get('tags');
+		$intInterval = $this->in->get('interval', 0);
+		$blnAllowComments = $this->in->get('allow_comments', 0);
+		$intMaxPosts = $this->in->get('maxposts', 0);
+		$intMaxLength = $this->in->get('maxlength', 0);
 		
+		if($intFeedID){
+			$blnResult = $this->pdh->put('feedposter_feeds', 'update', array($intFeedID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength));
+		} else {
+			$blnResult = $this->pdh->put('feedposter_feeds', 'add', array($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength));
+		}
+		
+		if($blnResult){
+			$message = array('title' => $this->user->lang('success'), 'text' => $this->user->lang('save_suc'), 'color' => 'green');
+		} else {
+			$message = array('title' => $this->user->lang('error'), 'text' => $this->user->lang('save_nosuc'), 'color' => 'red');	
+		}
+		
+		$this->display($message);
 	}
 	
 	public function edit(){
@@ -188,7 +211,7 @@ class FeedPosterFeeds extends page_generic {
 				'NAME'				=> $row['name'],
 				'S_ENABLED'			=> ($row['enabled']),
 				'URL'				=> $row['url'],
-				'LAST_UPDATED'		=> $this->time->user_date($row['lastUpdated']),
+				'LAST_UPDATED'		=> $this->time->user_date($row['lastUpdated'], true),
 				'S_ERROR'			=> ($row['errorLastUpdated']),
 				'ENABLED_ICON'		=> ($row['enabled'] == 1) ? 'eqdkp-icon-online' : 'eqdkp-icon-offline',
 				'ENABLE'			=> ($row['enabled'] == 1) ? 'fa fa-check-square-o icon-color-green' : 'fa fa-square-o icon-color-red',

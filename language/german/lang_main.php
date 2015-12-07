@@ -60,6 +60,7 @@ $lang = array(
 	'fp_maxlength_help'			=> 'Trage 0 ein, um den kompletten Text des Einträges zu importieren.',
 	'fp_entries'				=> 'Einträge',
 	'fp_chars'					=> 'Zeichen',
+	'fp_source'					=> 'Quelle',
 );
 
 ?>

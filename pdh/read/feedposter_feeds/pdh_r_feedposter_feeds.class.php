@@ -63,7 +63,7 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 				return true;
 			}		
 
-			$objQuery = $this->db->query('SELECT * FROM __plugin_feedposter_feeds');
+			$objQuery = $this->db->query('SELECT * FROM __plugin_feedposter_feeds ORDER by name DESC');
 			if($objQuery){
 				while($drow = $objQuery->fetchAssoc()){
 
@@ -93,7 +93,7 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 		/**
 		 * @return multitype: List of all IDs
 		 */				
-		public function get_id_list(){
+		public function get_id_list(){		
 			if ($this->feedposter_feeds === null) return array();
 			return array_keys($this->feedposter_feeds);
 		}
