@@ -117,7 +117,7 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 		
 		public function set_error($intFeedID){
 			$objQuery = $this->db->prepare("UPDATE __plugin_feedposter_feeds :p WHERE id=?")->set(array(
-					'error' => 1
+				'errorLastUpdated' => 1
 			))->execute($intFeedID);
 				
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
@@ -128,7 +128,8 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 		
 		public function set_last_update($intFeedID, $intTime){
 			$objQuery = $this->db->prepare("UPDATE __plugin_feedposter_feeds :p WHERE id=?")->set(array(
-					'lastUpdated' => $intTime
+					'lastUpdated'		=> $intTime,
+					'errorLastUpdated'	=> 0,
 			))->execute($intFeedID);
 		
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
