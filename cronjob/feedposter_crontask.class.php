@@ -102,6 +102,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 								if($strFeedType == 'eqdkp'){
 									$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.' feedsource_category_'.$val['category_id'].'">'.$strText.'</div>';
 								} else {
+									$strText = preg_replace("'<style[^>]*>.*</style>'siU",'',$strText);
 									$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div>';
 								}
 								$strPreviewimage = "";
@@ -151,10 +152,13 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 			$data = array();
 			$i = 0;
 			foreach ($items as $item) {
+				$strAlternateLink = "";
 				$childNodes = $xpath->query('child::*', $item);
 				$itemData = array();
-				foreach ($childNodes as $childNode) {
-					if ($childNode->nodeName != 'category') {
+				foreach ($childNodes as $childNode) {					
+					if($childNode->nodeName == 'link'){
+						$strAlternateLink = $childNode->getAttribute('href');
+					} else {
 						$itemData[$childNode->nodeName] = $childNode->nodeValue;
 					}
 				}
@@ -168,21 +172,19 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				if (isset($itemData['published'])) {
 					$time = strtotime($itemData['published']);
 					if ($time > $this->time->time) continue;
-				}
-				else {
+				} else {
 					$time = $this->time->time;
 				}
 				if (!empty($itemData['content'])) {
 					$description = $itemData['content'];
-				}
-				else {
+				} else {
 					$description = $itemData['summary'];
 				}
-					
+				
 				// get data
 				$data[$hash] = array(
 						'title'			=> $itemData['title'],
-						'link'			=> $itemData['id'],
+						'link'			=> (strlen($strAlternateLink)) ? $strAlternateLink : $itemData['id'],
 						'description'	=> $description,
 						'time'			=> $time,
 						'hash'			=> $hash,
