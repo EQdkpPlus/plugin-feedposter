@@ -102,7 +102,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 								if($strFeedType == 'eqdkp'){
 									$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.' feedsource_category_'.$val['category_id'].'">'.$strText.'</div>';
 								} else {
-									$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.$val['link'].'">'.$val['link'].'</a></div>';
+									$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div>';
 								}
 								$strPreviewimage = "";
 								$strAlias = $strTitle;
@@ -121,6 +121,9 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 								
 								//Write Log
 								$this->pdh->put('feedposter_log', 'add', array($intFeedID, $val['hash'], $this->time->time));
+								
+								//Prevent double input
+								$arrHashList[] = $val['hash'];
 							}
 							
 							
