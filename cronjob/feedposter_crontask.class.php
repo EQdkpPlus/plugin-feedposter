@@ -53,9 +53,16 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 						$document->loadXML($strContent);
 						
 						$xpath = new \DOMXPath($document);
-							
-						$namespace = $document->documentElement->getAttribute('xmlns');
-						$xpath->registerNamespace('ns', $namespace);
+						
+						if($document->documentElement !== null && $document->documentElement !== false && is_object($document->documentElement)){
+							$namespace = $document->documentElement->getAttribute('xmlns');
+							$xpath->registerNamespace('ns', $namespace);
+						} else {
+							//Update Error
+							$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID));
+							$this->pdh->process_hook_queue();
+							continue;
+						}
 						
 						$rootNode = $xpath->query('/*')->item(0);
 						
