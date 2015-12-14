@@ -86,6 +86,17 @@ class feedposter extends plugin_generic {
 				background-color: #ffc989;
 				color: #000;
 			}
+				
+			.feedposter.feedtype_twitter blockquote:before {
+				content: "\f099";
+				color: #55acee;
+			}
+				
+			.feedposter.feedtype_twitter blockquote{
+				border-color: #55acee;
+				background-color: #D9EDF7;
+				color: #000;
+			}
 		');
 	}
 
