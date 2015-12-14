@@ -148,6 +148,10 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 					}
 
 					$this->pdh->process_hook_queue();
+				} else {
+					//Update Error
+					$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID));
+					$this->pdh->process_hook_queue();
 				}
 			}
 			
