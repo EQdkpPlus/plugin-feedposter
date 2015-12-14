@@ -117,7 +117,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 								}
 
 								$strFeedType = 'twitter';
-								$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div>';
+								$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img><a>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div>';
 		
 								$strPreviewimage = "";
 								$strAlias = $strTitle;
