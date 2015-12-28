@@ -61,6 +61,9 @@ $lang = array(
 	'fp_entries'				=> 'Einträge',
 	'fp_chars'					=> 'Zeichen',
 	'fp_source'					=> 'Quelle',
+	'fp_showdays'				=> 'Anzahl der Tage, die der Artikel angezeigt werden soll',
+	'fp_showdays_help'			=> 'Trage 0 ein, um den Artikel unbegrenzt anzuzeigen',
+	'fp_days'					=> 'Tage',
 	'fp_feed_info'				=> 'Es werden nur Feeds akzeptiert, die dem RSS oder ATOM-Format entsprechen. Fehlerhafte Feeds können zur Darstellungsproblemen auf der Seite führen. Außerdem wird die EQdkp-Plus API für die letzten Artikel unterstützt, so dass Artikel aus anderen EQdkp Plus Installation eingebunden werden können.'
 );
 

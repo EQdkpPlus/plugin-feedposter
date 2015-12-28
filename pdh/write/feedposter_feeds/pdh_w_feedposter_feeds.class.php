@@ -52,7 +52,7 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			return false;
 		}
 		
-		public function add($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength){
+		public function add($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays){
 			$schluesselwoerter = preg_split("/[\s,]+/", $strTags);
 			$arrTags = array();
 			foreach($schluesselwoerter as $val){
@@ -70,6 +70,8 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 				'allowComments'	=> ($blnAllowComments) ? 1 : 0,
 				'maxPosts'		=> $intMaxPosts,
 				'maxTextLength'	=> $intMaxLength,
+				'featured'		=> ($blnFeatured) ? 1 : 0,
+				'showForDays'	=> $intShowDays,
 			))->execute();
 		
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
@@ -78,7 +80,7 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			return false;
 		}
 	
-		public function update($intID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength){
+		public function update($intID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays){
 			$schluesselwoerter = preg_split("/[\s,]+/", $strTags);
 			$arrTags = array();
 			foreach($schluesselwoerter as $val){
@@ -95,6 +97,8 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 				'allowComments'	=> ($blnAllowComments) ? 1 : 0,
 				'maxPosts'		=> $intMaxPosts,
 				'maxTextLength'	=> $intMaxLength,
+				'featured'		=> ($blnFeatured) ? 1 : 0,
+				'showForDays'	=> $intShowDays,
 			))->execute($intID);
 			
 			$this->pdh->enqueue_hook('feedposter_feeds_update');

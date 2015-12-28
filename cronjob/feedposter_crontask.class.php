@@ -234,7 +234,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 									$strPreviewimage = "";
 									$strAlias = $strTitle;
 									$intPublished = 1;
-									$intFeatured = 0;
+									$intFeatured = $arrData['featured'];
 									$intCategory = $arrData['categoryID'];
 									$intUserID = $arrData['userID'];
 									$intComments = $arrData['allowComments'];
@@ -243,6 +243,9 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 									$arrTags = unserialize($arrData['tags']);
 									$intDate = $val['time'];
 									$strShowFrom = $strShowTo = "";
+									if($arrData['showForDays'] > 0){
+										$strShowTo = $intDate + ($arrData['showForDays'] * 86400);										
+									}
 					
 									$blnResult = $this->pdh->put('articles', 'add', array($strTitle, $strText, $arrTags, $strPreviewimage, $strAlias, $intPublished, $intFeatured, $intCategory, $intUserID, $intComments, $intVotes,$intDate, $strShowFrom, $strShowTo, $intHideHeader));
 					

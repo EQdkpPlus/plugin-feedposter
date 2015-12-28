@@ -48,6 +48,8 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 		'feedposter_feeds_maxPosts' => array('maxPosts', array('%intFeedID%'), array()),
 		'feedposter_feeds_maxTextLength' => array('maxTextLength', array('%intFeedID%'), array()),
 		'feedposter_feeds_errorLastUpdated' => array('errorLastUpdated', array('%intFeedID%'), array()),
+		'feedposter_feeds_featured' => array('featured', array('%intFeedID%'), array()),
+		'feedposter_feeds_showForDays' => array('showForDays', array('%intFeedID%'), array()),
 	);
 				
 	public function reset(){
@@ -81,7 +83,8 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 						'maxPosts'			=> (int)$drow['maxPosts'],
 						'maxTextLength'		=> (int)$drow['maxTextLength'],
 						'errorLastUpdated'	=> (int)$drow['errorLastUpdated'],
-
+						'featured'			=> (int)$drow['featured'],
+						'showForDays'		=> (int)$drow['showForDays'],
 					);
 				}
 				
@@ -261,6 +264,30 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 		 public function get_errorLastUpdated($intFeedID){
 			if (isset($this->feedposter_feeds[$intFeedID])){
 				return $this->feedposter_feeds[$intFeedID]['errorLastUpdated'];
+			}
+			return false;
+		}
+		
+		/**
+		 * Returns featured for $intFeedID
+		 * @param integer $intFeedID
+		 * @return multitype featured
+		 */
+		public function get_featured($intFeedID){
+			if (isset($this->feedposter_feeds[$intFeedID])){
+				return $this->feedposter_feeds[$intFeedID]['featured'];
+			}
+			return false;
+		}
+		
+		/**
+		 * Returns showForDays for $intFeedID
+		 * @param integer $intFeedID
+		 * @return multitype showForDays
+		 */
+		public function get_showForDays($intFeedID){
+			if (isset($this->feedposter_feeds[$intFeedID])){
+				return $this->feedposter_feeds[$intFeedID]['showForDays'];
 			}
 			return false;
 		}

@@ -117,11 +117,13 @@ class FeedPosterFeeds extends page_generic {
 		$blnAllowComments = $this->in->get('allow_comments', 0);
 		$intMaxPosts = $this->in->get('maxposts', 0);
 		$intMaxLength = $this->in->get('maxlength', 0);
+		$blnFeatured = $this->in->get('featured', 0);
+		$intShowDays = $this->in->get('showdays', 0);
 		
 		if($intFeedID){
-			$blnResult = $this->pdh->put('feedposter_feeds', 'update', array($intFeedID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength));
+			$blnResult = $this->pdh->put('feedposter_feeds', 'update', array($intFeedID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays));
 		} else {
-			$blnResult = $this->pdh->put('feedposter_feeds', 'add', array($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength));
+			$blnResult = $this->pdh->put('feedposter_feeds', 'add', array($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays));
 		}
 		
 		if($blnResult){
@@ -157,6 +159,8 @@ class FeedPosterFeeds extends page_generic {
 				'FEED_ALLOW_COMMENTS'	=> new hradio('allow_comments', array('value' => $arrFeedData['allowComments'])),
 				'FEED_MAXPOSTS'			=> new hspinner('maxposts', array('min' => 0, 'value' => $arrFeedData['maxPosts'])),
 				'FEED_MAXLENGTH'		=> new hspinner('maxlength', array('min' => 0, 'value' => $arrFeedData['maxTextLength'])),
+				'FEED_FEATURED'			=> new hradio('featured', array('value' => $arrFeedData['featured'])),
+				'FEED_SHOWDAYS'			=> new hspinner('showdays', array('min' => 0, 'value' => $arrFeedData['showForDays'])),
 			));
 		} else {
 			$this->tpl->assign_vars(array(
@@ -168,6 +172,8 @@ class FeedPosterFeeds extends page_generic {
 				'FEED_ALLOW_COMMENTS'	=> new hradio('allow_comments', array('value' => 1)),
 				'FEED_MAXPOSTS'			=> new hspinner('maxposts', array('min' => 0, 'value' => 0)),
 				'FEED_MAXLENGTH'		=> new hspinner('maxlength', array('min' => 0, 'value' => 0)),
+				'FEED_FEATURED'			=> new hradio('featured', array('value' => 0)),
+				'FEED_SHOWDAYS'			=> new hspinner('showdays', array('min' => 0, 'value' => 0)),
 			));
 		}
 		
