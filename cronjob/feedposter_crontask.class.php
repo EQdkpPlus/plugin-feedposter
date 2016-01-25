@@ -292,8 +292,13 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				$itemData = array();
 				foreach ($childNodes as $childNode) {	
 					//  && $childNode->getAttribute('rel') == 'alternate'
-					if($childNode->nodeName == 'link'){						
-						$strAlternateLink = $childNode->getAttribute('href');
+					if($childNode->nodeName == 'link'){
+						$rel = $childNode->getAttribute('rel');
+						if($rel && $rel != "" && $rel == 'alternate'){
+							$strAlternateLink = $childNode->getAttribute('href');
+						} elseif(!$rel || $rel == ''){
+							if($strAlternateLink == "") $strAlternateLink = $childNode->getAttribute('href');
+						}
 					} else {
 						$itemData[$childNode->nodeName] = $childNode->nodeValue;
 					}
