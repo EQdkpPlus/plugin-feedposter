@@ -28,7 +28,7 @@ if (!defined('EQDKP_INC')){
   +--------------------------------------------------------------------------*/
 class feedposter extends plugin_generic {
 
-	public $version				= '0.2.1';
+	public $version				= '0.3.1';
 	public $build				= '';
 	public $copyright			= 'GodMod';
 
@@ -115,7 +115,7 @@ class feedposter extends plugin_generic {
 	}
 	
 	public function post_install(){
-		$this->timekeeper->add_cron(
+		$this->cronjobs->add_cron(
 			'feedposter', array(
 				'extern'			=> true,
 				'ajax'				=> true,
@@ -132,7 +132,7 @@ class feedposter extends plugin_generic {
 	}
 	
 	public function pre_uninstall(){
-		$this->timekeeper->del_cron('feedposter');
+		$this->cronjobs->del_cron('feedposter');
 	}
 	
 	/**
