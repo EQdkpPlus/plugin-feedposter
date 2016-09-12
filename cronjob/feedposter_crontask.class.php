@@ -313,6 +313,9 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				if (isset($itemData['published'])) {
 					$time = strtotime($itemData['published']);
 					if ($time > $this->time->time) continue;
+				} elseif (isset($itemData['updated'])) {
+					$time = strtotime($itemData['updated']);
+					if ($time > $this->time->time) continue;
 				} else {
 					$time = $this->time->time;
 				}
