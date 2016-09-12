@@ -52,7 +52,7 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			return false;
 		}
 		
-		public function add($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays){
+		public function add($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays, $intRemoveHtml){
 			$schluesselwoerter = preg_split("/[\s,]+/", $strTags);
 			$arrTags = array();
 			foreach($schluesselwoerter as $val){
@@ -72,6 +72,7 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 				'maxTextLength'	=> $intMaxLength,
 				'featured'		=> ($blnFeatured) ? 1 : 0,
 				'showForDays'	=> $intShowDays,
+				'removeHtml'	=> ($intRemoveHtml) ? 1 : 0,
 			))->execute();
 		
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
@@ -80,7 +81,7 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			return false;
 		}
 	
-		public function update($intID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays){
+		public function update($intID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays, $intRemoveHtml){
 			$schluesselwoerter = preg_split("/[\s,]+/", $strTags);
 			$arrTags = array();
 			foreach($schluesselwoerter as $val){
@@ -99,6 +100,7 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 				'maxTextLength'	=> $intMaxLength,
 				'featured'		=> ($blnFeatured) ? 1 : 0,
 				'showForDays'	=> $intShowDays,
+				'removeHtml'	=> ($intRemoveHtml) ? 1 : 0,
 			))->execute($intID);
 			
 			$this->pdh->enqueue_hook('feedposter_feeds_update');
@@ -119,9 +121,10 @@ if (!class_exists('pdh_w_feedposter_feeds'))
 			return true;
 		}
 		
-		public function set_error($intFeedID){
+		public function set_error($intFeedID, $strErrorMessage = ''){
 			$objQuery = $this->db->prepare("UPDATE __plugin_feedposter_feeds :p WHERE id=?")->set(array(
-				'errorLastUpdated' => 1
+				'errorLastUpdated' => 1,
+				'errorMessage' => $strErrorMessage,
 			))->execute($intFeedID);
 				
 			$this->pdh->enqueue_hook('feedposter_feeds_update');

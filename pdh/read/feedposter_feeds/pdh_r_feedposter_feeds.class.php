@@ -85,6 +85,8 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 						'errorLastUpdated'	=> (int)$drow['errorLastUpdated'],
 						'featured'			=> (int)$drow['featured'],
 						'showForDays'		=> (int)$drow['showForDays'],
+						'removeHtml'		=> (int)$drow['removeHtml'],
+						'errorMessage'		=> $drow['errorMessage'],
 					);
 				}
 				
@@ -288,6 +290,20 @@ if ( !class_exists( "pdh_r_feedposter_feeds" ) ) {
 		public function get_showForDays($intFeedID){
 			if (isset($this->feedposter_feeds[$intFeedID])){
 				return $this->feedposter_feeds[$intFeedID]['showForDays'];
+			}
+			return false;
+		}
+		
+		public function get_removeHtml($intFeedID){
+			if (isset($this->feedposter_feeds[$intFeedID])){
+				return $this->feedposter_feeds[$intFeedID]['removeHtml'];
+			}
+			return false;
+		}
+		
+		public function get_errorMessage($intFeedID){
+			if (isset($this->feedposter_feeds[$intFeedID])){
+				return $this->feedposter_feeds[$intFeedID]['errorMessage'];
 			}
 			return false;
 		}

@@ -43,9 +43,11 @@ $feedposterSQL = array(
 				`allowComments` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
 				`maxPosts` INT(11) UNSIGNED NOT NULL DEFAULT '0',
 				`maxTextLength` INT(11) UNSIGNED NOT NULL DEFAULT '0',
-				`errorLastUpdated` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
 				`featured` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
 				`showForDays` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+				`removeHtml` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+				`errorMessage` VARCHAR(255) NULL COLLATE 'utf8_bin',
+				`errorLastUpdated` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
 				PRIMARY KEY (`id`)
 			)
 			DEFAULT CHARSET=utf8 COLLATE=utf8_bin;",

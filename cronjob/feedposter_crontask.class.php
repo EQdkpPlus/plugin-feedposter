@@ -40,6 +40,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				$arrData = $this->pdh->get('feedposter_feeds', 'data', array($intFeedID));
 				if(!$arrData['enabled']) continue;
 				
+				
 				//Check Interval Time
 				if(($arrData['lastUpdated'] + $arrData['interval']) > $this->time->time ) continue;
 				
@@ -155,7 +156,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 						
 					} else {
 						//Update Error
-						$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID));
+						$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID, 'Invalid Json'));
 						$this->pdh->process_hook_queue();		
 					}					
 					
@@ -264,14 +265,14 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 					
 						} catch(Exception $e){
 							//Update Error
-							$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID));
+							$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID, 'Parsing error'));
 							$this->pdh->process_hook_queue();
 						}
 					
 						$this->pdh->process_hook_queue();
 					} else {
 						//Update Error
-						$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID));
+						$this->pdh->put('feedposter_feeds', 'set_error', array($intFeedID, 'Fetching error'));
 						$this->pdh->process_hook_queue();
 					}
 				}
@@ -313,9 +314,13 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				if (isset($itemData['published'])) {
 					$time = strtotime($itemData['published']);
 					if ($time > $this->time->time) continue;
+				} elseif(isset($itemData['updated'])) {
+					$time = strtotime($itemData['updated']);
+					if ($time > $this->time->time) continue;
 				} else {
 					$time = $this->time->time;
 				}
+				
 				if (!empty($itemData['textContent'])) {
 					$description = $itemData['textContent'];
 				}elseif (!empty($itemData['content'])) {
@@ -328,7 +333,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				$data[$hash] = array(
 						'title'			=> $itemData['title'],
 						'link'			=> (strlen($strAlternateLink)) ? $strAlternateLink : $itemData['id'],
-						'description'	=> $description,
+						'description'	=> ($arrFeedData['removeHtml']) ? strip_tags($description) : $description,
 						'time'			=> $time,
 						'hash'			=> $hash,
 				);
@@ -374,11 +379,25 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				else {
 					$time = $this->time->time;
 				}
-				if (!empty($itemData['content:encoded'])) {
-					$description = $itemData['content:encoded'];
-				}
-				else {
-					$description = $itemData['description'];
+				
+				if($arrFeedData['removeHtml']){
+					
+					if(!empty($itemData['description'])){
+						$description = strip_tags($itemData['description']);
+					} elseif(!empty($itemData['content:encoded'])){
+						$description = strip_tags($itemData['content:encoded']);
+					}
+					
+					
+					
+				} else {
+
+					if (!empty($itemData['content:encoded'])) {
+						$description = $itemData['content:encoded'];
+					}
+					else {
+						$description = $itemData['description'];
+					}
 				}
 					
 				// get data
@@ -428,7 +447,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				$data[$hash] = array(
 						'title' 		=> $itemData['title'],
 						'link' 			=> $itemData['link'],
-						'description'	=> $description,
+						'description'	=> ($arrFeedData['removeHtml']) ? strip_tags($description) : $description,
 						'time'			=> $time,
 						'hash'			=> $hash,
 						'category'		=> $itemData['category_id'],

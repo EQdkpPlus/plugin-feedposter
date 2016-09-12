@@ -119,11 +119,12 @@ class FeedPosterFeeds extends page_generic {
 		$intMaxLength = $this->in->get('maxlength', 0);
 		$blnFeatured = $this->in->get('featured', 0);
 		$intShowDays = $this->in->get('showdays', 0);
+		$intRemoveHtml = $this->in->get('remove_html', 0);
 		
 		if($intFeedID){
-			$blnResult = $this->pdh->put('feedposter_feeds', 'update', array($intFeedID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays));
+			$blnResult = $this->pdh->put('feedposter_feeds', 'update', array($intFeedID, $strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays, $intRemoveHtml));
 		} else {
-			$blnResult = $this->pdh->put('feedposter_feeds', 'add', array($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays));
+			$blnResult = $this->pdh->put('feedposter_feeds', 'add', array($strName, $strURL, $intCategory, $intUser, $strTags, $intInterval, $blnAllowComments, $intMaxPosts, $intMaxLength, $blnFeatured, $intShowDays, $intRemoveHtml));
 		}
 		
 		if($blnResult){
@@ -161,6 +162,7 @@ class FeedPosterFeeds extends page_generic {
 				'FEED_MAXLENGTH'		=> new hspinner('maxlength', array('min' => 0, 'value' => $arrFeedData['maxTextLength'])),
 				'FEED_FEATURED'			=> new hradio('featured', array('value' => $arrFeedData['featured'])),
 				'FEED_SHOWDAYS'			=> new hspinner('showdays', array('min' => 0, 'value' => $arrFeedData['showForDays'])),
+				'FEED_REMOVE_HTML'		=> new hradio('remove_html', array('value' => $arrFeedData['removeHtml'])),
 			));
 		} else {
 			$this->tpl->assign_vars(array(
@@ -174,6 +176,7 @@ class FeedPosterFeeds extends page_generic {
 				'FEED_MAXLENGTH'		=> new hspinner('maxlength', array('min' => 0, 'value' => 0)),
 				'FEED_FEATURED'			=> new hradio('featured', array('value' => 0)),
 				'FEED_SHOWDAYS'			=> new hspinner('showdays', array('min' => 0, 'value' => 0)),
+				'FEED_REMOVE_HTML'		=> new hradio('remove_html', array('value' => 0)),
 			));
 		}
 		
@@ -225,6 +228,7 @@ class FeedPosterFeeds extends page_generic {
 				'U_EDIT'			=> 'manage_feeds.php'.$this->SID.'&amp;edit='.$row['id'],
 				'U_ENABLE'			=> 'manage_feeds.php'.$this->SID.'&amp;'.(($row['enabled'] == 1) ? 'disable' : 'enable').'='.$row['id'].'&amp;link_hash='.(($row['enabled'] == 1) ? $this->CSRFGetToken('disable') : $this->CSRFGetToken('enable')),
 				'ERROR_ICON'		=> ($row['errorLastUpdated']) ? 'eqdkp-icon-offline' : 'eqdkp-icon-online',
+				'ERROR_TITLE'		=> ($row['errorLastUpdated']) ? $row['errorMessage'] : '',
 			));
 		}
 
