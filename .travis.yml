@@ -1,7 +1,7 @@
 language: php
 php:
-  - "5.5"
-  - "5.4"
+  - "5.6"
+  - "7.0"
   
 before_script:
   #- pyrus install pear/PHP_CodeSniffer
@@ -14,6 +14,7 @@ before_script:
   #- pear channel-discover pear.pdepend.org
   #- pear install --alldeps phpmd/PHP_PMD
   #- phpenv rehash
+  #
 
 script: 
   #- phpcs --standard=PHPCS --extensions=php --ignore=vendor ./
