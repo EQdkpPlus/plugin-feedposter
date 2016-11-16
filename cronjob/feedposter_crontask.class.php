@@ -118,7 +118,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 								}
 
 								$strFeedType = 'twitter';
-								$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img><a>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div>';
+								$strText = '<!-- NO_EMBEDLY --><div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img><a>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div><!-- END_NO_EMBEDLY -->';
 		
 								$strPreviewimage = "";
 								$strAlias = $strTitle;
@@ -163,6 +163,8 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 				} else {
 					//Normal RSS/ATOM Feed
 					$strContent = register('urlfetcher')->fetch($arrData['url']);
+					
+					echo "normal";
 					
 					if($strContent){
 						try{
@@ -230,7 +232,7 @@ if ( !class_exists( "feedposter_crontask" ) ) {
 										$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.' feedsource_category_'.$val['category_id'].'">'.$strText.'</div>';
 									} else {
 										$strText = preg_replace("'<style[^>]*>.*</style>'siU",'',$strText);
-										$strText = '<div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div>';
+										$strText = '<!-- NO_EMBEDLY --><div class="feedposter feedid_'.$intFeedID.' feedtype_'.$strFeedType.'"><blockquote>'.strip_tags($strText, '<img>').'</blockquote>'.$this->user->lang('fp_source').': <a href="'.sanitize(strip_tags($val['link'])).'">'.sanitize(strip_tags($val['link'])).'</a></div><!-- END_NO_EMBEDLY -->';
 									}
 									$strPreviewimage = "";
 									$strAlias = $strTitle;
