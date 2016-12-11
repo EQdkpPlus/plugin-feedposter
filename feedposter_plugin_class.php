@@ -28,7 +28,7 @@ if (!defined('EQDKP_INC')){
   +--------------------------------------------------------------------------*/
 class feedposter extends plugin_generic {
 
-	public $version				= '0.3.2';
+	public $version				= '0.3.0';
 	public $build				= '';
 	public $copyright			= 'GodMod';
 
@@ -53,11 +53,11 @@ class feedposter extends plugin_generic {
 			'long_description'	=> $this->user->lang('feedposter_long_desc'),
 			'homepage'			=> EQDKP_PROJECT_URL,
 			'manuallink'		=> false,
-			'plus_version'		=> '2.1',
+			'plus_version'		=> '2.3',
 		));
 
 		$this->add_dependency(array(
-			'plus_version'      => '2.1'
+			'plus_version'      => '2.3'
 		));
 
 		// -- Register our permissions ------------------------
