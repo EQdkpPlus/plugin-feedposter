@@ -193,7 +193,7 @@ class FeedPosterFeeds extends page_generic {
 				'template_file'		=> 'admin/manage_feeds_edit.html',
 				'page_path'			=> [
 						['title'=>$this->user->lang('menu_admin_panel'), 'url'=>$this->root_path.'admin/'.$this->SID],
-						['title'=>$this->user->lang('feedposter').': '.$this->user->lang('fp_manage_feeds'), 'url'=>$this->root_path.'admin/plugins/feedposter/admin/manage_feeds.php'.$this->SID],
+						['title'=>$this->user->lang('feedposter').': '.$this->user->lang('fp_manage_feeds'), 'url'=>$this->root_path.'plugins/feedposter/admin/manage_feeds.php'.$this->SID],
 						['title'=> (($intFeedID) ? $strFeedName : $this->user->lang('fp_new_feed')), 'url'=>' '],
 				],
 				'display'			=> true
