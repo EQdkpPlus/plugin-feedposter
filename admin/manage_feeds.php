@@ -191,6 +191,11 @@ class FeedPosterFeeds extends page_generic {
 				'page_title'		=> (($intFeedID) ? $strFeedName : $this->user->lang('fp_new_feed')).' - '.$this->user->lang('fp_manage_feeds'),
 				'template_path'		=> $this->pm->get_data('feedposter', 'template_path'),
 				'template_file'		=> 'admin/manage_feeds_edit.html',
+				'page_path'			=> [
+						['title'=>$this->user->lang('menu_admin_panel'), 'url'=>$this->root_path.'admin/'.$this->SID],
+						['title'=>$this->user->lang('feedposter').': '.$this->user->lang('fp_manage_feeds'), 'url'=>$this->root_path.'admin/plugins/feedposter/admin/manage_feeds.php'.$this->SID],
+						['title'=> (($intFeedID) ? $strFeedName : $this->user->lang('fp_new_feed')), 'url'=>' '],
+				],
 				'display'			=> true
 		));
 	}
@@ -238,7 +243,11 @@ class FeedPosterFeeds extends page_generic {
 			'page_title'		=> $this->user->lang('fp_manage_feeds').' - '.$this->user->lang('feedposter'),
 			'template_path'		=> $this->pm->get_data('feedposter', 'template_path'),
 			'template_file'		=> 'admin/manage_feeds.html',
-			'display'			=> true
+			'page_path'			=> [
+					['title'=>$this->user->lang('menu_admin_panel'), 'url'=>$this->root_path.'admin/'.$this->SID],
+					['title'=>$this->user->lang('feedposter').': '.$this->user->lang('fp_manage_feeds'), 'url'=>' '],
+			],
+			'display'			=> true,
 		));
 	}
 }
