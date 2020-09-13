@@ -65,8 +65,8 @@ if ( !class_exists( "pdh_r_feedposter_log" ) ) {
 						'hash'			=> $drow['hash'],
 						'date'			=> (int)$drow['date'],
 					);
-					
-					$this->feed_mapping[(int)$drow['feedID']] = (int)$drow['id'];
+					if(!is_array($this->feed_mapping[(int)$drow['feedID']])) $this->feed_mapping[(int)$drow['feedID']] = array();
+					$this->feed_mapping[(int)$drow['feedID']][] = (int)$drow['id'];
 				}
 				
 				$this->pdc->put('pdh_feedposter_log_table', $this->feedposter_log, null);
