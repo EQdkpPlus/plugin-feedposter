@@ -169,7 +169,7 @@ class FeedPosterFeeds extends page_generic {
 				'FEED_NAME'				=> "",
 				'FEED_CATEGORY'			=> (new hdropdown('category', array('options' => $arrCategories, 'value' => 2)))->output(),
 				'FEED_USER'				=> (new hdropdown('user_id', array('options' => $this->pdh->aget('user', 'name', 0, array($this->pdh->get('user', 'id_list'))), 'value' => $this->user->id)))->output(),
-				'FEED_TAGS'				=> implode(', ', $this->pdh->get('feedposter_feeds', 'tags', array($intFeedID))),
+				'FEED_TAGS'				=> "",
 				'FEED_INTERVAL'			=> (new hdropdown('interval', array('options' => $this->user->lang('fp_repeat_inveral'), 'value' => 3600)))->output(),
 				'FEED_ALLOW_COMMENTS'	=> (new hradio('allow_comments', array('value' => 1)))->output(),
 				'FEED_MAXPOSTS'			=> (new hspinner('maxposts', array('min' => 0, 'value' => 0)))->output(),
