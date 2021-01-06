@@ -28,7 +28,7 @@ if (!defined('EQDKP_INC')){
   +--------------------------------------------------------------------------*/
 class feedposter extends plugin_generic {
 
-	public $version				= '0.3.3';
+	public $version				= '0.3.4';
 	public $build				= '';
 	public $copyright			= 'GodMod';
 
